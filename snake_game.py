@@ -42,14 +42,14 @@ while key != ESC:
     x = snake[0][1]
 
     if key == curses.KEY_RIGHT:
-        x = (x+1) % 59
-        if x == 0: x = 1
+        x += 1 
+        if x == 59: x = 1
     elif key == curses.KEY_LEFT:
         x -= 1
         if x == 0: x = 58
     elif key == curses.KEY_DOWN:
-        y = (y+1) % 19
-        if y == 0: y = 1
+        y += 1
+        if y == 19: y = 1
     elif key == curses.KEY_UP:
         y -= 1
         if y == 0: y = 18
