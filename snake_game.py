@@ -21,7 +21,6 @@ score = 0
 ESC = 27
 key = curses.KEY_RIGHT
 
-
 while key != ESC:
     win.addstr(0, 2, 'Score : ' + str(score) + ' ')
     win.timeout(150 - (len(snake)) //5 + len(snake) //10 % 120) #increase speed formula
@@ -32,36 +31,28 @@ while key != ESC:
 
     if key not in [curses.KEY_RIGHT, curses.KEY_LEFT, curses.KEY_UP, curses.KEY_DOWN]:
         key = prev_key
+
+    if (key == curses.KEY_RIGHT and prev_key == curses.KEY_LEFT) or\
+        (key == curses.KEY_LEFT and prev_key == curses.KEY_RIGHT) or\
+        (key == curses.KEY_UP and prev_key == curses.KEY_DOWN) or\
+        (key == curses.KEY_DOWN and prev_key == curses.KEY_UP):
+        key = prev_key
  
     y = snake[0][0]
     x = snake[0][1]
 
-    if key == curses.KEY_RIGHT and prev_key != curses.KEY_LEFT:
-        x = (x+1) % 58
+    if key == curses.KEY_RIGHT:
+        x = (x+1) % 59
         if x == 0: x = 1
-    elif key == curses.KEY_LEFT and prev_key != curses.KEY_RIGHT:
+    elif key == curses.KEY_LEFT:
         x -= 1
         if x == 0: x = 58
-    elif key == curses.KEY_DOWN and prev_key != curses.KEY_UP:
-        y = (y+1) % 18
+    elif key == curses.KEY_DOWN:
+        y = (y+1) % 19
         if y == 0: y = 1
-    elif key == curses.KEY_UP and prev_key != curses.KEY_DOWN:
+    elif key == curses.KEY_UP:
         y -= 1
         if y == 0: y = 18
-    else:
-        key = prev_key
-        if key == curses.KEY_RIGHT:
-            x = (x+1) % 58
-            if x == 0: x = 1
-        elif key == curses.KEY_LEFT:
-            x -= 1
-            if x == 0: x = 58
-        elif key == curses.KEY_DOWN:
-            y = (y+1) % 18
-            if y == 0: y = 1
-        elif key == curses.KEY_UP:
-            y -= 1
-            if y == 0: y = 18
 
     snake.insert(0,(y,x)) 
 
