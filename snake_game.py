@@ -36,12 +36,6 @@ while key != ESC:
     y = snake[0][0]
     x = snake[0][1]
 
-    if  (key == curses.KEY_RIGHT and prev_key == curses.KEY_LEFT) or\
-        (key == curses.KEY_LEFT and prev_key == curses.KEY_RIGHT) or\
-        (key == curses.KEY_DOWN and prev_key == curses.KEY_UP) or\
-        (key == curses.KEY_UP and prev_key == curses.KEY_DOWN):
-        continue
-
     if key == curses.KEY_RIGHT and prev_key != curses.KEY_LEFT:
         x = (x+1) % 58
         if x == 0: x = 1
@@ -56,7 +50,18 @@ while key != ESC:
         if y == 0: y = 18
     else:
         key = prev_key
-        continue
+        if key == curses.KEY_RIGHT:
+            x = (x+1) % 58
+            if x == 0: x = 1
+        elif key == curses.KEY_LEFT:
+            x -= 1
+            if x == 0: x = 58
+        elif key == curses.KEY_DOWN:
+            y = (y+1) % 18
+            if y == 0: y = 1
+        elif key == curses.KEY_UP:
+            y -= 1
+            if y == 0: y = 18
 
     snake.insert(0,(y,x)) 
 
@@ -82,7 +87,7 @@ while key != ESC:
         if snake[0] == l:
             bite_ind = True
             break
-    #if bite_ind: break
+    if bite_ind: break
 
     #Draw snake
     for c in snake:
